@@ -101,11 +101,11 @@ const MOBILE_GAMES = [
     title: "Yukon Gold",
     gif: "assets/mobile/Yukongold.mp4",
     icon: "assets/mobile/Youkon gold.png",
-    tags: ["Казино", "Unity", "Firebase SDK Remote", "Gemini", "iOS"],
+    tags: ["Tower Defence", "Unity", "Firebase SDK Remote", "Gemini", "iOS"],
     description: {
-      ru: "Игровые слоты в стиле золотой лихорадки Юкона.",
-      uk: "Ігрові слоти у стилі золотої лихоманки Юкону.",
-      en: "Slot-style gameplay set during the Yukon gold rush."
+      ru: "Tower Defence в стиле золотой лихорадки Юкона.",
+      uk: "Tower Defence у стилі золотої лихоманки Юкону.",
+      en: "Tower defence gameplay set during the Yukon gold rush."
     }
   },
   {
@@ -173,6 +173,7 @@ const UI = {
   ru: {
     statProjects: "реализованных проектов",
     statExp: "года опыта",
+    viewMore: "Подробнее",
     navPortable: "Портативные",
     navDesktop: "На большом экране",
     heroEyebrow: "PORTFOLIO — GAME DEV",
@@ -220,6 +221,7 @@ const UI = {
   uk: {
     statProjects: "реалізованих проєктів",
     statExp: "роки досвіду",
+    viewMore: "Детальніше",
     navPortable: "Портативні",
     navDesktop: "На великому екрані",
     heroEyebrow: "PORTFOLIO — GAME DEV",
@@ -267,6 +269,7 @@ const UI = {
   en: {
     statProjects: "shipped projects",
     statExp: "years of experience",
+    viewMore: "View more",
     navPortable: "Portable",
     navDesktop: "On the big screen",
     heroEyebrow: "PORTFOLIO — GAME DEV",
@@ -489,6 +492,7 @@ function buildTagsMarkup(tags){
       item.type = "button";
       item.className = "grid-item";
       item.style.animationDelay = `${Math.min(i * 0.045, 0.6)}s`;
+      item.style.setProperty("--tilt", `${((i % 5) - 2) * 0.6}deg`);
       item.setAttribute("aria-label", game.title);
 
       const media = document.createElement("div");
@@ -498,6 +502,10 @@ function buildTagsMarkup(tags){
       ph.innerHTML = `<span class="ph-icon">▦</span>`;
       media.appendChild(ph);
       media.appendChild(buildMediaEl(game.gif, game.title, true));
+      const num = document.createElement("span");
+      num.className = "grid-media-num mono";
+      num.textContent = `#${String(i + 1).padStart(2, "0")}`;
+      media.appendChild(num);
 
       const body = document.createElement("div");
       body.className = "grid-item-body";
@@ -514,9 +522,14 @@ function buildTagsMarkup(tags){
         : game.tags.slice(0, 2);
       tagsRow.innerHTML = buildTagsMarkup(previewTags);
 
+      const cta = document.createElement("span");
+      cta.className = "grid-item-cta";
+      cta.innerHTML = `<i data-i18n="viewMore">${UI[currentLang].viewMore}</i><span>→</span>`;
+
       item.appendChild(media);
       item.appendChild(body);
       item.appendChild(tagsRow);
+      item.appendChild(cta);
       item.addEventListener("click", () => openDetail(i));
       grid.appendChild(item);
     });
@@ -791,6 +804,7 @@ function buildTagsMarkup(tags){
       const card = document.createElement("article");
       card.className = "shelf-card";
       card.style.animationDelay = `${Math.min(i * 0.06, 0.6)}s`;
+      card.style.setProperty("--tilt", `${((i % 5) - 2) * 0.5}deg`);
 
       const media = document.createElement("div");
       media.className = "shelf-card-media";
@@ -808,6 +822,7 @@ function buildTagsMarkup(tags){
           <h3>${game.title}</h3>
         </div>
         <div class="tags">${buildTagsMarkup(game.tags.slice(0, 2))}</div>
+        <span class="shelf-card-cta"><i data-i18n="viewMore">${UI[currentLang].viewMore}</i><span>→</span></span>
       `;
 
       card.appendChild(media);
