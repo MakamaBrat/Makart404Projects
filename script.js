@@ -335,7 +335,41 @@ function isVideoFile(path){
   return ["mp4", "webm", "mov", "m4v"].includes(ext);
 }
 
-function buildMediaEl(path, alt){
+/* ---------- lazy-load engine for grid/shelf thumbnails ----------
+   Instead of downloading every gif/mp4 on page load, we only set
+   the real `src` once the card is about to enter the viewport. */
+const __lazyMediaObserver = ("IntersectionObserver" in window)
+  ? new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        __loadLazyMedia(el);
+        obs.unobserve(el);
+      });
+    }, { rootMargin: "500px 0px", threshold: 0.01 })
+  : null;
+
+function __loadLazyMedia(el){
+  const src = el.dataset.src;
+  if (!src) return;
+  el.src = src;
+  delete el.dataset.src;
+  if (el.tagName === "VIDEO"){
+    el.load();
+    const p = el.play();
+    if (p && p.catch) p.catch(() => {}); // autoplay can be blocked, ignore silently
+  }
+}
+
+/**
+ * @param {string} path  gif/mp4/webm source
+ * @param {string} alt   alt text (images only)
+ * @param {boolean} lazy when true, defers loading until the element
+ *                       is near the viewport (used for grid/shelf
+ *                       thumbnails). Detail/console views load eagerly
+ *                       since the user just chose to open them.
+ */
+function buildMediaEl(path, alt, lazy){
   let el;
   if (isVideoFile(path)){
     el = document.createElement("video");
@@ -343,16 +377,23 @@ function buildMediaEl(path, alt){
     el.loop = true;
     el.autoplay = true;
     el.playsInline = true;
-    el.preload = "metadata";
+    el.preload = lazy ? "none" : "metadata";
     el.addEventListener("loadeddata", () => el.classList.add("is-visible"));
     el.addEventListener("error", () => el.classList.remove("is-visible"));
-    el.src = path;
   } else {
     el = document.createElement("img");
     el.alt = alt || "";
     el.draggable = false;
+    el.decoding = "async";
     el.addEventListener("load", () => el.classList.add("is-visible"));
     el.addEventListener("error", () => el.classList.remove("is-visible"));
+    if (lazy) el.loading = "lazy";
+  }
+
+  if (lazy && __lazyMediaObserver){
+    el.dataset.src = path;
+    __lazyMediaObserver.observe(el);
+  } else {
     el.src = path;
   }
   return el;
@@ -447,6 +488,7 @@ function buildTagsMarkup(tags){
       const item = document.createElement("button");
       item.type = "button";
       item.className = "grid-item";
+      item.style.animationDelay = `${Math.min(i * 0.045, 0.6)}s`;
       item.setAttribute("aria-label", game.title);
 
       const media = document.createElement("div");
@@ -455,7 +497,7 @@ function buildTagsMarkup(tags){
       ph.className = "gif-placeholder";
       ph.innerHTML = `<span class="ph-icon">▦</span>`;
       media.appendChild(ph);
-      media.appendChild(buildMediaEl(game.gif, game.title));
+      media.appendChild(buildMediaEl(game.gif, game.title, true));
 
       const body = document.createElement("div");
       body.className = "grid-item-body";
@@ -748,6 +790,7 @@ function buildTagsMarkup(tags){
     DESKTOP_GAMES.forEach((game, i) => {
       const card = document.createElement("article");
       card.className = "shelf-card";
+      card.style.animationDelay = `${Math.min(i * 0.06, 0.6)}s`;
 
       const media = document.createElement("div");
       media.className = "shelf-card-media";
@@ -755,7 +798,7 @@ function buildTagsMarkup(tags){
       ph.className = "gif-placeholder";
       ph.innerHTML = `<span class="ph-icon">▦</span><code>${game.gif.split("/").pop()}</code>`;
       media.appendChild(ph);
-      media.appendChild(buildMediaEl(game.gif, game.title));
+      media.appendChild(buildMediaEl(game.gif, game.title, true));
 
       const body = document.createElement("div");
       body.className = "shelf-card-body";

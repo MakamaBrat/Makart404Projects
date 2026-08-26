@@ -414,6 +414,16 @@ main{ position: relative; z-index: 1; }
 }
 .grid-item:active{ transform: translateY(-1px); }
 
+/* cascading pop-in as cards enter */
+.grid-item, .shelf-card{
+  animation: cardPopIn .6s var(--ease) backwards;
+}
+@keyframes cardPopIn{
+  0%{ opacity: 0; transform: translateY(20px) scale(.94); }
+  60%{ opacity: 1; }
+  100%{ opacity: 1; transform: translateY(0) scale(1); }
+}
+
 /* small card = ONE window only */
 .grid-media{
   position: relative;
@@ -584,8 +594,31 @@ body.detail-open{ overflow: hidden; }
   text-align: center;
   padding: 20px;
   z-index: 0;
+  overflow: hidden;
 }
-.ph-icon{ font-size: 26px; opacity: .5; }
+/* shimmer sweep while the gif/video is still loading */
+.gif-placeholder::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg,
+    transparent 30%,
+    rgba(246,185,77,0.10) 46%,
+    rgba(87,217,200,0.14) 54%,
+    transparent 70%);
+  background-size: 240% 100%;
+  animation: shimmerSweep 1.7s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shimmerSweep{
+  0%{ background-position: 160% 0; }
+  100%{ background-position: -60% 0; }
+}
+.ph-icon{ font-size: 26px; opacity: .5; animation: phIconPulse 1.7s ease-in-out infinite; }
+@keyframes phIconPulse{
+  0%,100%{ opacity: .35; transform: scale(1); }
+  50%{ opacity: .65; transform: scale(1.08); }
+}
 .ph-text{ font-size: 12px; }
 .gif-placeholder code{
   font-size: 10px;
