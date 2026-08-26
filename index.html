@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Makart404 — Portfolio</title>
+<meta name="description" content="Portfolio">
+<meta property="og:title" content="Makart404 — Portfolio">
+<meta property="og:description" content="Portfolio">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-photo" aria-hidden="true"></div>
+<div class="grain"></div>
+
+<div class="site-top-title">Makart404 Portfolio</div>
+
+<header class="hero">
+
+  <div class="topbar">
+    <span class="topbar-label mono">PORTFOLIO</span>
+    <div class="topbar-stats">
+      <span><b>50+</b> <i data-i18n="statProjects">реализованных проектов</i></span>
+      <span><b>4+</b> <i data-i18n="statExp">года опыта</i></span>
+    </div>
+    <div class="lang-switch" id="langSwitch">
+      <button type="button" data-lang="uk">UKR</button>
+      <button type="button" data-lang="ru">RUS</button>
+      <button type="button" data-lang="en">ENG</button>
+    </div>
+  </div>
+
+  <nav class="topnav">
+    <span class="brand">GAME_DEV<span class="brand-dot">.</span></span>
+    <div class="topnav-links">
+      <a href="#portable" data-i18n="navPortable">Портативные</a>
+      <a href="#desktop" data-i18n="navDesktop">На большом экране</a>
+    </div>
+  </nav>
+
+  <div class="hero-body">
+    <h1 class="hero-big" data-i18n="heroBig">PORTFOLIO</h1>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= LOADING / MINI GAME SECTION ================= -->
+  <section id="loading" class="loading-section">
+    <div class="section-head">
+      <span class="eyebrow eyebrow-amber" data-i18n="loadingEyebrow">00 — ЗАГРУЗКА</span>
+    </div>
+
+    <div class="loading-bar-wrap">
+      <div class="loading-bar-track">
+        <div class="loading-bar-fill" id="loadingBarFill"></div>
+      </div>
+      <span class="loading-bar-percent mono" id="loadingBarPercent">0%</span>
+    </div>
+
+    <p class="loading-hint" data-i18n="loadingHint">Можно поиграть, пока грузится страница</p>
+
+    <div class="game-switch" id="gameSwitch">
+      <button type="button" class="game-switch-btn is-active" id="gameSwitchDino" data-game="dino" aria-label="Dino">
+        <span class="game-switch-icon">🦖</span>
+      </button>
+      <button type="button" class="game-switch-btn" id="gameSwitchFlappy" data-game="flappy" aria-label="Flappy">
+        <span class="game-switch-icon">🐦</span>
+      </button>
+    </div>
+
+    <div class="dino-wrap" id="dinoWrap">
+      <canvas id="dinoCanvas" class="mini-game-canvas" width="375" height="100"></canvas>
+      <div class="dino-score mono" id="dinoScore">000</div>
+      <button type="button" class="dino-overlay" id="dinoOverlay">
+        <span data-i18n="dinoStart">SPACE / TAP — ПРЫЖОК</span>
+      </button>
+    </div>
+
+    <div class="dino-wrap" id="flappyWrap" hidden>
+      <canvas id="flappyCanvas" class="mini-game-canvas" width="375" height="100"></canvas>
+      <div class="dino-score mono" id="flappyScore">000</div>
+      <button type="button" class="dino-overlay" id="flappyOverlay">
+        <span data-i18n="flappyStart">SPACE / TAP — ЛЕТЕТЬ</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= PORTABLE / PHONE SECTION ================= -->
+  <section id="portable" class="portable-section">
+    <div class="section-head">
+      <span class="eyebrow eyebrow-amber" data-i18n="portableEyebrow">01 — ПОРТАТИВНЫЕ</span>
+    </div>
+
+    <!-- grid of small preview cards, shown by default -->
+    <div class="mobile-grid" id="mobileGrid"></div>
+
+    <!-- expanded phone view, hidden until a card is clicked -->
+    <div class="mobile-detail" id="mobileDetail" hidden>
+     <div class="detail-inner">
+
+      <button class="back-btn" id="backToGrid">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="backToGrid">Все игры</span>
+      </button>
+
+      <div class="mobile-stage-layout">
+        <div class="console-stage">
+          <button class="pad-btn pad-left" id="mobilePrev" aria-label="Предыдущая игра">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div class="phones-wrap" id="phonesWrap">
+            <button type="button" class="speed-btn" id="speedBtn" aria-label="Ускорить x2">×2</button>
+          </div>
+
+          <button class="pad-btn pad-right" id="mobileNext" aria-label="Следующая игра">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <div class="game-info" id="mobileInfo">
+          <div class="game-info-icon" id="mobileIcon" hidden><img id="mobileIconImg" src="" alt=""></div>
+          <span class="game-index mono" id="mobileIndex">01 / 01</span>
+          <h3 id="mobileTitle">Название игры</h3>
+          <p id="mobileDesc">Описание игры появится здесь.</p>
+          <div class="tags" id="mobileTags"></div>
+        </div>
+      </div>
+
+      <div class="dots" id="mobileDots"></div>
+     </div>
+    </div>
+  </section>
+
+  <!-- ================= DESKTOP / HORIZONTAL SECTION ================= -->
+  <section id="desktop" class="desktop-section">
+    <div class="section-head">
+      <span class="eyebrow eyebrow-cyan" data-i18n="desktopEyebrow">02 — ГОРИЗОНТАЛЬНЫЕ</span>
+    </div>
+
+    <div class="shelf-wrap">
+      <button class="shelf-arrow shelf-arrow-left" id="shelfPrev" aria-label="Прокрутить влево">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="shelf" id="desktopShelf"></div>
+      <button class="shelf-arrow shelf-arrow-right" id="shelfNext" aria-label="Прокрутить вправо">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- expanded fullscreen view for the horizontal games -->
+    <div class="desktop-detail" id="desktopDetail" hidden>
+     <div class="detail-inner">
+
+      <button class="back-btn" id="backToShelf">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span data-i18n="backToGrid">Все игры</span>
+      </button>
+
+      <div class="tv-stage">
+        <button class="pad-btn pad-left" id="desktopPrev" aria-label="Предыдущая игра">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="tv-mock">
+          <div class="tv-screen" id="tvScreen">
+            <div class="media-slot" id="tvMediaSlot"></div>
+            <div class="scanlines"></div>
+            <div class="screen-glare"></div>
+            <button type="button" class="speed-btn" id="tvSpeedBtn" aria-label="Ускорить x2">×2</button>
+          </div>
+        </div>
+
+        <button class="pad-btn pad-right" id="desktopNext" aria-label="Следующая игра">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="game-info" id="tvInfo">
+        <div class="game-info-icon" id="tvIcon" hidden><img id="tvIconImg" src="" alt=""></div>
+        <span class="game-index mono" id="tvIndex">01 / 01</span>
+        <h3 id="tvTitle">Название игры</h3>
+        <p id="tvDesc">Описание игры появится здесь.</p>
+        <div class="tags" id="tvTags"></div>
+      </div>
+
+      <div class="dots" id="tvDots"></div>
+     </div>
+    </div>
+  </section>
+
+  <!-- ================= MATCH / COOPERATION CHECK SECTION ================= -->
+  <section id="match" class="match-section">
+    <div class="section-head">
+      <span class="eyebrow eyebrow-magenta" data-i18n="matchEyebrow">03 — ПРОВЕРКА СОВМЕСТИМОСТИ</span>
+    </div>
+    <h2 class="match-title" data-i18n="matchTitle">Насколько мы подходим друг другу?</h2>
+    <p class="match-sub" data-i18n="matchSub">Выставь условия оффера — и посмотри на честную реакцию.</p>
+
+    <div class="match-panel">
+      <div class="match-controls">
+
+        <div class="match-field">
+          <div class="match-field-top">
+            <label for="matchSalary" data-i18n="matchSalaryLabel">Зарплата</label>
+            <span class="match-salary-value" id="matchSalaryValue">1800$</span>
+          </div>
+          <input type="range" id="matchSalary" min="500" max="5000" step="50" value="1800">
+        </div>
+
+        <div class="match-checks">
+          <label class="match-check"><input type="checkbox" id="matchDeadlines"><span data-i18n="matchDeadlines">Жёсткие дедлайны</span></label>
+          <label class="match-check"><input type="checkbox" id="matchCalls"><span data-i18n="matchCalls">Частые созвоны</span></label>
+          <label class="match-check"><input type="checkbox" id="matchTeam" checked><span data-i18n="matchTeam">Помощь команды</span></label>
+          <label class="match-check"><input type="checkbox" id="matchFreeSchedule"><span data-i18n="matchFreeSchedule">Свободный график</span></label>
+          <label class="match-check"><input type="checkbox" id="matchBureaucracy" checked><span data-i18n="matchBureaucracy">Минимум бюрократии</span></label>
+          <label class="match-check"><input type="checkbox" id="matchCrypto"><span data-i18n="matchCrypto">Оплата в крипте</span></label>
+        </div>
+
+      </div>
+
+      <div class="match-result">
+        <img id="matchEmoji" class="match-emoji" src="assets/emo/emoMin0.png" alt="">
+        <span class="match-percent" id="matchPercent">0%</span>
+        <span class="match-label" id="matchLabel"></span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="contact-cta">
+    <a class="contact-btn" href="https://t.me/Makart404" target="_blank" rel="noopener">Telegram</a>
+    <a class="contact-btn" href="mailto:15makars15@gmail.com">Gmail</a>
+  </div>
+  <div class="today-views" id="todayViews">
+    <span data-i18n="todayViewsLabel">Сьогодні було переглядів:</span>
+    <span class="today-views-num" id="todayViewsNum">0</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
