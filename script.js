@@ -110,7 +110,7 @@ const MOBILE_GAMES = [
   },
   {
     title: "Postman",
-    gif: "assets/mobile/PostmanGame.gif",
+    gif: "assets/mobile/PostmanGame.mp4",
     icon: "assets/mobile/PostmanIcon.png",
     tags: ["Аркада", "Unity", "Android"],
     description: {
@@ -121,7 +121,7 @@ const MOBILE_GAMES = [
   },
   {
     title: "Car Repair",
-    gif: "assets/mobile/CarRepair.gif",
+    gif: "assets/mobile/CarRepair.mp4",
     tags: ["Аркада", "Unity", "Animator", "Android"],
     description: {
       ru: "Аркада про ремонт машин — почини авто вовремя и не завали заказ.",
@@ -131,7 +131,7 @@ const MOBILE_GAMES = [
   },
   {
     title: "Jack Fisher",
-    gif: "assets/mobile/Jack Fisher.gif",
+    gif: "assets/mobile/Jack Fisher.mp4",
     icon: "assets/mobile/JackFish.png",
     tags: ["Аркада", "Unity", "Animator", "iOS"],
     description: {
@@ -145,7 +145,7 @@ const MOBILE_GAMES = [
 const DESKTOP_GAMES = [
   {
     title: "Atomic Casino",
-    gif: "assets/desktop/AtomicCasino.gif",
+    gif: "assets/desktop/AtomicCasino.mp4",
     icon: "assets/mobile/Atomic Casino.png",
     tags: ["Казино", "Unity", "Firebase Auth", "Firebase Firestore", "Firebase Analytics", "Firebase Remote Config", "Firebase Crashlytics", "AppsFlyer"],
     description: {
