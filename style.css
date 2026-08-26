@@ -771,6 +771,11 @@ body.detail-open{ overflow: hidden; }
   background: var(--bg-panel-raised);
   border: 1px solid rgba(87,217,200,0.25);
   margin-bottom: 2px;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+.game-info.is-switching .game-info-icon{
+  opacity: 0;
+  transform: translateY(6px);
 }
 .game-info-icon img{
   width: 100%; height: 100%;

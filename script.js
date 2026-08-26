@@ -122,6 +122,7 @@ const MOBILE_GAMES = [
   {
     title: "Car Repair",
     gif: "assets/mobile/CarRepair.mp4",
+    icon: "assets/mobile/CarRepair.png",
     tags: ["Аркада", "Unity", "Animator", "Android"],
     description: {
       ru: "Аркада про ремонт машин — почини авто вовремя и не завали заказ.",
